@@ -15,6 +15,8 @@ RUN pip install --no-cache-dir Flask
 
 COPY src/flask_entrypoint.py ./flask_entrypoint.py
 
-EXPOSE 5000 
+EXPOSE 5000
+
+RUN chmod -R 777 data/db/
 
 CMD [ "python", "./flask_entrypoint.py" ]
