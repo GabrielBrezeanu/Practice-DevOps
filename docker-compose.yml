@@ -11,7 +11,7 @@ services:
      - 50000:50000
     container_name: jenkins
     volumes:
-    #  - "$PWD/jenkins/jenkins_configuration:/var/jenkins_home"
+     - "$PWD/jenkins/jenkins_configuration:/var/jenkins_home"
      - /var/run/docker.sock:/var/run/docker.sock
      - /usr/local/bin/docker:/usr/local/bin/docker
 
@@ -24,62 +24,62 @@ services:
      - 5000:5000
     container_name: demo-app-python
 
-  db:
-    image: postgres
-    volumes:
-      - ./data/db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-  web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/src/django
-    ports:
-      - "8000:8000"
-    environment:
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    depends_on:
-      - db
+#   db:
+#     image: postgres
+#     volumes:
+#       - ./data/db:/var/lib/postgresql/data
+#     environment:
+#       - POSTGRES_DB=postgres
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_PASSWORD=postgres
+#   web:
+#     build: .
+#     command: python manage.py runserver 0.0.0.0:8000
+#     volumes:
+#       - .:/src/django
+#     ports:
+#       - "8000:8000"
+#     environment:
+#       - POSTGRES_NAME=postgres
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_PASSWORD=postgres
+#     depends_on:
+#       - db
     
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
-    container_name: elasticsearch
-    environment:
-      - xpack.security.enabled=false
-      - discovery.type=single-node
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
-    cap_add:
-      - IPC_LOCK
-    volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-      - 9300:9300
+#   elasticsearch:
+#     image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+#     container_name: elasticsearch
+#     environment:
+#       - xpack.security.enabled=false
+#       - discovery.type=single-node
+#     ulimits:
+#       memlock:
+#         soft: -1
+#         hard: -1
+#       nofile:
+#         soft: 65536
+#         hard: 65536
+#     cap_add:
+#       - IPC_LOCK
+#     volumes:
+#       - elasticsearch-data:/usr/share/elasticsearch/data
+#     ports:
+#       - 9200:9200
+#       - 9300:9300
 
-  kibana:
-    container_name: kibana
-    image: docker.elastic.co/kibana/kibana:7.4.0
-    environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-    ports:
-      - 5601:5601
-    depends_on:
-      - elasticsearch
+#   kibana:
+#     container_name: kibana
+#     image: docker.elastic.co/kibana/kibana:7.4.0
+#     environment:
+#       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+#     ports:
+#       - 5601:5601
+#     depends_on:
+#       - elasticsearch
       
-volumes:
-  elasticsearch-data:
-    driver: local
+# volumes:
+#   elasticsearch-data:
+#     driver: local
 #   postgres:
 #     container_name: postgres_container
 #     image: postgres
