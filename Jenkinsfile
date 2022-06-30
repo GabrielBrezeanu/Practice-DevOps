@@ -2,9 +2,9 @@ pipeline {
 
   agent any
 
-  environment {
-        dockerhub=credentials('dockerhub_id')
-    }
+//   environment {
+//         dockerhub=credentials('dockerhub_id')
+//     }
 
   stages {
 
@@ -22,17 +22,30 @@ pipeline {
             }
         }
     
-      stage('push') {
+    //   stage('push') {
+    //         steps {
+
+    //             // sh "env"
+    //             sh "docker logout"
+    //             sh "echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin docker.io"
+    //             sh 'make demo-app-push'
+
+    //         } 
+            
+    //     }
+
+        stage("Push image") {
             steps {
-
-                // sh "env"
-                sh "docker logout"
-                sh "echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin docker.io"
-                sh 'make demo-app-push'
-
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                            myapp.push("latest")
+                            myapp.push("${env.BUILD_ID}")
+                    }
+                }
             } 
             
         }
+
     
     stage('Deploy App') {
       steps {
