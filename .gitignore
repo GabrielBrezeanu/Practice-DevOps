@@ -1,0 +1,10 @@
+jenkins/jenkins_configuration
+jenkins/jenkins_configuration/*
+.terraform
+.terraform.lock.hcl
+.terraform.tfstate*
+*.tfstate
+*.tfstate.backup
+metrics-server*
+.vscode
+.DS_Store
