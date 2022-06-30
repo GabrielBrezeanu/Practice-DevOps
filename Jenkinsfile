@@ -50,7 +50,7 @@ pipeline {
     stage('Deploy App') {
       steps {
         script {
-          kubernetesDeploy(configs: "pregatit-demo-app-python.yml", kubeconfigId: "kubernetes_admin-user")
+          kubernetesDeploy(configs: "pregatit-demo-app-python.yml", kubeconfigId: "kubernetes")
         }
       }
     }
