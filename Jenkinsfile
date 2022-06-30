@@ -2,6 +2,10 @@ pipeline {
 
   agent any
 
+  environment {
+        dockerhub=credentials('docker-hub-token')
+    }
+
   stages {
 
     stage('Checkout Source') {
@@ -18,17 +22,17 @@ pipeline {
             }
         }
     
-      stage("Push image") {
+      stage('push') {
             steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                            myapp.push("latest")
-                            myapp.push("${env.BUILD_ID}")
-                    }
-                }
-            }
-        }
 
+                // sh "env"
+                sh "docker logout"
+                sh "echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin docker.io"
+                sh 'make demo-app-push'
+
+            } 
+            
+        }
     
     stage('Deploy App') {
       steps {
