@@ -1,4 +1,3 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,7 +16,7 @@ spec:
     spec:
       containers:
       - name: mentorat
-        image: pregatit-demo-app-python
+        image: gbrezeanu00/pregatit-demo-app-python
         imagePullPolicy: Never
         ports:
         - containerPort: 5000      

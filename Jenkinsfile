@@ -1,36 +1,43 @@
 pipeline {
-    agent any
-    environment {
-        dockerhub=credentials('docker-hub-token')
+
+  agent any
+
+  stages {
+
+    stage('Checkout Source') {
+      steps {
+        git url:'https://github.com/GabrielBrezeanu/Practice-DevOps.git', branch:'master'
+      }
     }
-    stages {
-        stage('checkout') {
+    
+      stage("Build image") {
             steps {
-                checkout scm
+                script {
+                    myapp = docker.build("gbrezeanu00/pregatit-demo-app-python:${env.BUILD_ID}")
+                }
             }
         }
-        stage('build') {
+    
+      stage("Push image") {
             steps {
-                sh 'make demo-app-build'
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                            myapp.push("latest")
+                            myapp.push("${env.BUILD_ID}")
+                    }
+                }
             }
         }
-        stage('push') {
-            steps {
-                // sh "env"
-                sh "docker logout"
-                sh "echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin docker.io"
-                sh 'make demo-app-push'
-            }
+
+    
+    stage('Deploy App') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "pregatit-demo-app-python.yml", kubeconfigId: "mykubeconfig")
         }
-        stage('test') {
-            steps {
-                sh "echo Executing testing stage..."
-            }
-        }
-        stage('deploy') {
-            steps {
-                sh "echo Executing deployment stage..."
-            }
-        }
+      }
     }
+
+  }
+
 }
