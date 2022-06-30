@@ -47,11 +47,13 @@ pipeline {
         }
 
     
-    stage('Deploy') {
-            steps {
-                sh "echo Executing deployment stage..."
-            }
-        }
+    stage('Deploy App') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "pregatit-demo-app-python.yml", kubeconfigId: "kubeconfig")
+        }       
+      }      
+    }
 
   }
 
