@@ -8,10 +8,9 @@ pipeline {
 
     environment {
         tag = sh(returnStdout: true, script: "git rev-parse --short=10 HEAD").trim()
-    }
 
-    environment {
         def BUILDVERSION = sh(script: "echo `date +%s`", returnStdout: true).trim()
+        
     }
 
 
