@@ -26,6 +26,30 @@ pipeline {
                 }
             }
         }
+    
+    //   stage('push') {
+    //         steps {
+
+    //             // sh "env"
+    //             sh "docker logout"
+    //             sh "echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin docker.io"
+    //             sh 'make demo-app-push'
+
+    //         } 
+            
+    //     }
+
+        stage("Push image") {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_id') {
+                            myapp.push("latest")
+                            myapp.push("${env.BUILD_ID}")
+                    }
+                }
+            } 
+            
+        }
 
         stage('Build core lodestone image') {
             steps {
@@ -53,30 +77,6 @@ pipeline {
                     sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push mirantiseng/lodestone-mover:${tag}"
                 }
             }
-        }
-    
-    //   stage('push') {
-    //         steps {
-
-    //             // sh "env"
-    //             sh "docker logout"
-    //             sh "echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin docker.io"
-    //             sh 'make demo-app-push'
-
-    //         } 
-            
-    //     }
-
-        stage("Push image") {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_id') {
-                            myapp.push("latest")
-                            myapp.push("${env.BUILD_ID}")
-                    }
-                }
-            } 
-            
         }
 
     
