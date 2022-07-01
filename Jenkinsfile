@@ -18,8 +18,16 @@ pipeline {
         git url:'https://github.com/GabrielBrezeanu/Practice-DevOps.git', branch:'master'
       }
     }
+    
+      stage("Build image") {
+            steps {
+                script {
+                    myapp = docker.build("gbrezeanu00/pregatit-demo-app-python:${env.BUILD_ID}")
+                }
+            }
+        }
 
-    stage('Build core lodestone image') {
+        stage('Build core lodestone image') {
             steps {
                 // TODO: proper tagging
                 sh "docker build -f Dockerfile.lodestone -t mirantiseng/lodestone:${tag} ."
@@ -43,14 +51,6 @@ pipeline {
                 sh "docker build -f Dockerfile.mover -t mirantiseng/lodestone-mover:${tag} ."
                 withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
                     sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push mirantiseng/lodestone-mover:${tag}"
-                }
-            }
-        }
-    
-      stage("Build image") {
-            steps {
-                script {
-                    myapp = docker.build("gbrezeanu00/pregatit-demo-app-python:${env.BUILD_ID}")
                 }
             }
         }
