@@ -10,8 +10,18 @@ pipeline {
         tag = sh(returnStdout: true, script: "git rev-parse --short=10 HEAD").trim()
     }
 
+    environment {
+        def BUILDVERSION = sh(script: "echo `date +%s`", returnStdout: true).trim()
+    }
+
 
   stages {
+
+    stage("Awesome Stage") {
+            steps {
+                echo "Current build version :: $BUILDVERSION"
+            }
+        }
 
     stage('Checkout Source') {
       steps {
