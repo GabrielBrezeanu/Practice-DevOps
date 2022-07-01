@@ -65,7 +65,7 @@ pipeline {
             steps {
                 // TODO: proper tagging
                 sh "docker build -f Dockerfile -t gbrezeanu00/pregatit-demo-app-python ."
-                withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_id', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
                     sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push gbrezeanu00/pregatit-demo-app-python"
                 }
             }
@@ -75,7 +75,7 @@ pipeline {
             steps {
                 // TODO: proper tagging
                 sh "docker build -f Dockerfile -t gbrezeanu00/pregatit-demo-app-python ."
-                withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_id', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
                     sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push gbrezeanu00/pregatit-demo-app-python"
                 }
             }
@@ -85,7 +85,7 @@ pipeline {
             steps {
                 // TODO: proper tagging
                 sh "docker build -f Dockerfile -t gbrezeanu/pregatit-demo-app-python ."
-                withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_id', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
                     sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push gbrezeanu/pregatit-demo-app-python"
                 }
             }
