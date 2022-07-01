@@ -44,7 +44,7 @@ spec:
   - port: 5000
     protocol: TCP
     targetPort: 5000
-    nodePort: 311220
+    nodePort: 31120
   selector:
     app: mentorat
   type: NodePort
