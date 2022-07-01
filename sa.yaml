@@ -1,0 +1,10 @@
+apiVersion: v1
+imagePullSecrets:
+- name: jenkinsregistry
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-06-30T10:55:37Z"
+  name: default
+  namespace: default
+  resourceVersion: "77615"
+  uid: 64432b94-8af9-487e-8110-70f39af6c902
