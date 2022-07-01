@@ -50,35 +50,6 @@ pipeline {
             } 
             
         }
-
-        stage('Build core lodestone image') {
-            steps {
-                // TODO: proper tagging
-                sh "docker build -f Dockerfile.lodestone -t mirantiseng/lodestone:${tag} ."
-                withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
-                    sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push mirantiseng/lodestone:${tag}"
-                }
-            }
-        }
-        stage('Build core lodestone-comment image') {
-            steps {
-                // TODO: proper tagging
-                sh "docker build -f Dockerfile -t mirantiseng/lodestone-comment:${tag} ."
-                withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
-                    sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push mirantiseng/lodestone-comment:${tag}"
-                }
-            }
-        }
-        stage('Build core lodestone-mover image') {
-            steps {
-                // TODO: proper tagging
-                sh "docker build -f Dockerfile.mover -t mirantiseng/lodestone-mover:${tag} ."
-                withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
-                    sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push mirantiseng/lodestone-mover:${tag}"
-                }
-            }
-        }
-
     
     stage('Deploy App') {
       steps {
