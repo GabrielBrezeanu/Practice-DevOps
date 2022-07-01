@@ -19,7 +19,7 @@ spec:
       containers:
       - name: pregatit-demo-app-python-container
         image: gbrezeanu00/pregatit-demo-app-python:latest
-        imagePullPolicy: Always
+        imagePullPolicy: Never
         ports:
         - containerPort: 5000
 ---
