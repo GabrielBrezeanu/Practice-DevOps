@@ -7,10 +7,11 @@ pipeline {
 //     }
 
     environment {
+
         tag = sh(returnStdout: true, script: "git rev-parse --short=10 HEAD").trim()
 
         def BUILDVERSION = sh(script: "echo `date +%s`", returnStdout: true).trim()
-        
+
     }
 
 
@@ -58,6 +59,36 @@ pipeline {
                 }
             } 
             
+        }
+
+        stage('Build core lodestone image') {
+            steps {
+                // TODO: proper tagging
+                sh "docker build -f Dockerfile.lodestone -t mirantiseng/lodestone ."
+                withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
+                    sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push mirantiseng/lodestone"
+                }
+            }
+        }
+
+        stage('Build core lodestone-comment image') {
+            steps {
+                // TODO: proper tagging
+                sh "docker build -f Dockerfile -t mirantiseng/lodestone-comment ."
+                withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
+                    sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push mirantiseng/lodestone-comment"
+                }
+            }
+        }
+
+        stage('Build core lodestone-mover image') {
+            steps {
+                // TODO: proper tagging
+                sh "docker build -f Dockerfile.mover -t mirantiseng/lodestone-mover ."
+                withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
+                    sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push mirantiseng/lodestone-mover"
+                }
+            }
         }
     
     stage('Deploy App') {
