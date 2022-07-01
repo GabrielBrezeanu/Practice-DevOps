@@ -10,8 +10,16 @@ pipeline {
         tag = sh(returnStdout: true, script: "git rev-parse --short=10 HEAD").trim()
     }
 
-    stages {
-        stage('Build core lodestone image') {
+
+  stages {
+
+    stage('Checkout Source') {
+      steps {
+        git url:'https://github.com/GabrielBrezeanu/Practice-DevOps.git', branch:'master'
+      }
+    }
+
+    stage('Build core lodestone image') {
             steps {
                 // TODO: proper tagging
                 sh "docker build -f Dockerfile.lodestone -t mirantiseng/lodestone:${tag} ."
@@ -38,15 +46,6 @@ pipeline {
                 }
             }
         }
-    }
-
-  stages {
-
-    stage('Checkout Source') {
-      steps {
-        git url:'https://github.com/GabrielBrezeanu/Practice-DevOps.git', branch:'master'
-      }
-    }
     
       stage("Build image") {
             steps {
