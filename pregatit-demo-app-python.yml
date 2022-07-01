@@ -22,18 +22,18 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: pregatit-demo-app-python
-  namespace: default
-spec:
-  containers:
-    - name: pregatit-demo-app-python
-      image: gbrezeanu00/pregatit-demo-app-python:latest
-  imagePullSecrets:
-    - name: jen
+# ---
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: pregatit-demo-app-python
+#   namespace: default
+# spec:
+#   containers:
+#     - name: pregatit-demo-app-python
+#       image: gbrezeanu00/pregatit-demo-app-python:latest
+#   imagePullSecrets:
+#     - name: jen
 ---
 apiVersion: v1
 kind: Service 
