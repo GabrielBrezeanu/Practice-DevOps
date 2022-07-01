@@ -64,7 +64,7 @@ pipeline {
         stage('Build core image') {
             steps {
                 // TODO: proper tagging
-                sh "docker build -f Dockerfile.pregatit-demo-app-python -t gbrezeanu00/pregatit-demo-app-python ."
+                sh "docker build -f Dockerfile -t gbrezeanu00/pregatit-demo-app-python ."
                 withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
                     sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push gbrezeanu00/pregatit-demo-app-python"
                 }
@@ -84,7 +84,7 @@ pipeline {
         stage('Build core mover image') {
             steps {
                 // TODO: proper tagging
-                sh "docker build -f Dockerfile.mover -t gbrezeanu/pregatit-demo-app-python ."
+                sh "docker build -f Dockerfile -t gbrezeanu/pregatit-demo-app-python ."
                 withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
                     sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push gbrezeanu/pregatit-demo-app-python"
                 }
