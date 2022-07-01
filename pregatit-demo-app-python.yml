@@ -23,7 +23,7 @@ spec:
         ports:
         - containerPort: 5000
       imagePullSecrets:
-        - name: jenkinsregistry
+        - name: jen
 ---
 apiVersion: v1
 kind: Service 
