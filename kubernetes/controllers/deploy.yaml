@@ -1,36 +1,40 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment
-  labels:
-    app: mentorat
+  name: pregatit-demo-app-python
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: mentorat
+      app: pregatit-demo-app-python
+      version: blue
   template:
     metadata:
+      name: pregatit-demo-app-python-pod
       labels:
-        app: mentorat
+        app: pregatit-demo-app-python
+        version: blue
     spec:
       containers:
-      - name: mentorat
-        image: gbrezeanu00/pregatit-demo-app-python
-        imagePullPolicy: Never
+      - name: pregatit-demo-app-python-container
+        image: gbrezeanu00/pregatit-demo-app-python:latest
+        imagePullPolicy: Always
         ports:
-        - containerPort: 5000      
-
+        - containerPort: 80
 ---
 apiVersion: v1
-kind: Service
+kind: Service 
 metadata:
-  name: app-deployment
+  name: pregatit-demo-app-python-svc
+  labels:
+    app: pregatit-demo-app-python
 spec:
-  ports:
-  - port: 5000
-    protocol: TCP
-    targetPort: 5000
   selector:
-    app: mentorat
+    app: pregatit-demo-app-python
+    version: blue
   type: NodePort
+  ports:
+  - nodePort: 31218
+    port: 80
+    targetPort: 80
