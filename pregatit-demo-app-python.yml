@@ -21,7 +21,7 @@ spec:
         image: gbrezeanu00/pregatit-demo-app-python:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - containerPort: 5000
 ---
 apiVersion: v1
 kind: Service 
@@ -36,5 +36,5 @@ spec:
   type: NodePort
   ports:
   - nodePort: 31219
-    port: 80
-    targetPort: 80
+    port: 5000
+    targetPort: 5000
