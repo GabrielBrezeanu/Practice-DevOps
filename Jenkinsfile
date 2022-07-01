@@ -61,32 +61,32 @@ pipeline {
             
         }
 
-        stage('Build core lodestone image') {
+        stage('Build core image') {
             steps {
                 // TODO: proper tagging
-                sh "docker build -f Dockerfile.lodestone -t mirantiseng/lodestone ."
+                sh "docker build -f Dockerfile.pregatit-demo-app-python -t gbrezeanu00/pregatit-demo-app-python ."
                 withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
-                    sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push mirantiseng/lodestone"
+                    sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push gbrezeanu00/pregatit-demo-app-python"
                 }
             }
         }
 
-        stage('Build core lodestone-comment image') {
+        stage('Build core comment image') {
             steps {
                 // TODO: proper tagging
-                sh "docker build -f Dockerfile -t mirantiseng/lodestone-comment ."
+                sh "docker build -f Dockerfile -t gbrezeanu00/pregatit-demo-app-python ."
                 withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
-                    sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push mirantiseng/lodestone-comment"
+                    sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push gbrezeanu00/pregatit-demo-app-python"
                 }
             }
         }
 
-        stage('Build core lodestone-mover image') {
+        stage('Build core mover image') {
             steps {
                 // TODO: proper tagging
-                sh "docker build -f Dockerfile.mover -t mirantiseng/lodestone-mover ."
+                sh "docker build -f Dockerfile.mover -t gbrezeanu/pregatit-demo-app-python ."
                 withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
-                    sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push mirantiseng/lodestone-mover"
+                    sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push gbrezeanu/pregatit-demo-app-python"
                 }
             }
         }
